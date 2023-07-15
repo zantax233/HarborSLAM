@@ -10,6 +10,8 @@ find_package(PCL REQUIRED QUIET)
 find_package(Eigen3 REQUIRED )
 find_package(Sophus REQUIRED)
 find_package(fmt REQUIRED)
+find_package(yaml-cpp REQUIRED)
+#pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
 
 include_directories(
 	${PROJECT_SOURCE_DIR}
@@ -18,6 +20,7 @@ include_directories(
 	${OpenCV_INCLUDE_DIRS}
 	${Sophus_INCLUDE_DIRS}
 	${FMT_INCLUDE_DIRS}
+	${YAML_CPP_INCLUDEDIR}
 	"usr/local/eigen3"
 )
 
@@ -25,19 +28,21 @@ link_directories(
 	${OpenCV_LIBRARY_DIRS}
 	${PCL_LIBRARY_DIRS}
 )
-
 add_definitions(${PCL_DEFINITIONS})
 
-add_library(${PROJECT_NAME} SHARED
+add_library(${PROJECT_NAME} 
+			src/parameter.cpp
 			src/Frame.cpp
 			src/Plane.cpp
 			src/Track.cpp
 			src/Utils.cpp)
+			
 target_link_libraries(${PROJECT_NAME} 
-			${PCL_LIBRARIES} 
-			${OpenCV_LIBRARIES} 
+			${PCL_LIBRARIES}
+			${Sophus_LIBRARIES}
+			${OpenCV_LIBRARIES}
+			${YAML_CPP_LIBRARIES}
 			Eigen3::Eigen 
-			${Sophus_LIBRARIES} 
 			fmt)
 
 add_executable(runHarborSLAM examples/main.cpp)

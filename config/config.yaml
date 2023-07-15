@@ -1,1 +1,11 @@
 %YAML:1.0
+
+VIS_PLANE: false
+SHOW_MATCHING_RESULT: false
+SHOW_ALIGNING_RESULT: false
+
+planeMatchingThreshold: 20.0
+matchingCostThreshold: 8.0
+
+initialGuessIters: 10
+poseRefinementIters: 30

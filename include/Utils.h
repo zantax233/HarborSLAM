@@ -4,24 +4,26 @@
 #include "include/common.h"
 #include "include/Plane.h"
 
+namespace HARBOR{
+	class Utils{
+	public:
+		
+		/**
+		 * @brief compute skew symmetric matrix of a 3D vector
+		 * @return 3*3 matrix
+		 */
+		static Eigen::Matrix3d skewSymmetricMatrix(Eigen::Vector3d &v);
+	};// class Utils
 
-class Utils{
-public:
-	
 	/**
-	 * @brief compute skew symmetric matrix of a 3D vector
-	 * @return 3*3 matrix
+	 * @brief sort planes according to the number of points in descend order
 	 */
-	static Eigen::Matrix3d skewSymmetricMatrix(Eigen::Vector3d &v);
-};
+	struct CompareByNumOfPlanePoints{
+		bool operator()(const Plane& plane1, const Plane& plane2) const {
+			return plane1.mPlanePoints->points.size() > plane2.mPlanePoints->points.size();
+		}
+	};
 
-/**
- * @brief sort planes according to the number of points in descend order
- */
-struct CompareByNumOfPlanePoints{
-	bool operator()(const Plane& plane1, const Plane& plane2) const {
-		return plane1.mPlanePoints->points.size() > plane2.mPlanePoints->points.size();
-	}
-};
+}// namespace HARBOR
 
 #endif
